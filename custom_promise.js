@@ -8,8 +8,10 @@ class _Promise {
     resolve(data){
         if (this.isPending){
             this.isPending = false;
-            this.callBacks.forEach(callBack=>{
-                callBack.call(this, data);
+            this.callBacks.forEach( (callBack, index, arr)=>{
+                let arg = data;
+                if (index > 1) arg = arr[index-1]();
+                callBack.call(this, arg);
             })
         }
     }
